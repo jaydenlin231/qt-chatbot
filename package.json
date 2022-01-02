@@ -5,14 +5,20 @@
   "main": "index.js",
   "engines": {
     "node": "17.3.0",
-    "npm" : "8.3.0"
+    "npm": "8.3.0"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "backend": "GOOGLE_APPLICATION_CREDENTIALS=/Users/jlin.io/Desktop/VRES-Credentials/text-analysis-for-eng-edu-415875368cf0.json nodemon index.js"
   },
   "author": "Jayden Lin",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.2"
+    "body-parser": "^1.19.1",
+    "dialogflow": "^1.2.0",
+    "express": "^4.17.2",
+    "pb-util": "^1.0.2",
+    "structjson": "^1.0.1",
+    "uuid": "^8.3.2"
   }
 }
