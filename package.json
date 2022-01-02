@@ -4,8 +4,8 @@
   "description": "Web based chatbot for QUT unit support",
   "main": "index.js",
   "engines": {
-    "node": "17.3.0",
-    "npm": "8.3.0"
+    "node": "13.6.0",
+    "npm": "6.13.4"
   },
   "scripts": {
     "start": "node index.js",
@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.1",
-    "dialogflow": "^1.2.0",
+    "dialogflow": "^1.1.1",
     "express": "^4.17.2",
     "pb-util": "^1.0.2",
     "structjson": "^1.0.1",
