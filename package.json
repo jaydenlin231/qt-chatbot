@@ -9,16 +9,23 @@
   },
   "scripts": {
     "start": "node index.js",
-    "backend": "GOOGLE_APPLICATION_CREDENTIALS=/Users/jlin.io/Desktop/VRES-Credentials/text-analysis-for-eng-edu-415875368cf0.json nodemon index.js"
+    "backend": "GOOGLE_APPLICATION_CREDENTIALS=/Users/jlin.io/Desktop/VRES-Credentials/text-analysis-for-eng-edu-415875368cf0.json nodemon index.js",
+    "frontend": "npm run start --prefix client",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\" "
   },
   "author": "Jayden Lin",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.1",
+    "create-react-app": "^5.0.0",
     "dialogflow": "^1.1.1",
     "express": "^4.17.2",
+    "net": "^1.0.2",
     "pb-util": "^1.0.2",
     "structjson": "^1.0.1",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "concurrently": "^6.5.1"
   }
 }
