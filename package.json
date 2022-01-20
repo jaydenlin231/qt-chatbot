@@ -11,7 +11,8 @@
     "start": "node index.js",
     "backend": "GOOGLE_APPLICATION_CREDENTIALS=/Users/jlin.io/Desktop/VRES-Credentials/text-analysis-for-eng-edu-415875368cf0.json nodemon index.js",
     "frontend": "npm run start --prefix client",
-    "dev": "concurrently \"npm run backend\" \"npm run frontend\" "
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\" ",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "Jayden Lin",
   "license": "ISC",
