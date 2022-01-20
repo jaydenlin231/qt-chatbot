@@ -38,7 +38,8 @@ class QuickReplies extends Component {
           <div className="row valign-wrapper">
             <div className="col s2">
               <a
-                href="/"
+                target="_blank"
+                href="https://www.qut.edu.au/research/study-with-us/student-topics/topics/text-analysis-for-engineering-education"
                 className="btn-floating btn-large waves-effect waves-light blue darken-4"
               >
                 QT

@@ -49,37 +49,76 @@ class Chatbot extends Component {
     };
 
     this.setState({ messages: [...this.state.messages, says] });
-    const res = await axios.post("/api/df_text_query", {
-      text: queryText,
-      userID: cookies.get("userID"),
-    });
+    try {
+      const res = await axios.post("/api/df_text_query", {
+        text: queryText,
+        userID: cookies.get("userID"),
+      });
 
-    for (let msg of res.data.fulfillmentMessages) {
-      console.log(JSON.stringify(msg));
-      let says = {
+      for (let msg of res.data.fulfillmentMessages) {
+        // console.log(JSON.stringify(msg));
+        let says = {
+          speaks: "bot",
+          msg: msg,
+        };
+        this.setState({ messages: [...this.state.messages, says] });
+      }
+    } catch (e) {
+      says = {
         speaks: "bot",
-        msg: msg,
+        msg: {
+          text: {
+            text: "I'm having troubles. I need to terminate. will be back later",
+          },
+        },
       };
       this.setState({ messages: [...this.state.messages, says] });
+      let that = this;
+      setTimeout(function () {
+        that.setState({ showBot: false });
+      }, 2000);
     }
   }
 
   async df_event_query(event) {
-    const res = await axios.post("api/df_event_query", {
-      event,
-      userID: cookies.get("userID"),
-    });
-
-    for (let msg of res.data.fulfillmentMessages) {
+    try {
+      const res = await axios.post("/api/df_event_query", {
+        event,
+        userID: cookies.get("userID"),
+      });
+      for (let msg of res.data.fulfillmentMessages) {
+        let says = {
+          speaks: "bot",
+          msg: msg,
+        };
+        this.setState({ messages: [...this.state.messages, says] });
+      }
+    } catch (e) {
       let says = {
         speaks: "bot",
-        msg: msg,
+        msg: {
+          text: {
+            text: "I'm having troubles. I need to terminate. will be back later",
+          },
+        },
       };
       this.setState({ messages: [...this.state.messages, says] });
+      let that = this;
+      setTimeout(function () {
+        that.setState({ showBot: false });
+      }, 2000);
     }
   }
 
-  componentDidMount() {
+  resolveAfterXSeconds(x) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(x);
+      }, x * 1000);
+    });
+  }
+
+  async componentDidMount() {
     this.df_event_query("Welcome");
   }
 
@@ -111,7 +150,8 @@ class Chatbot extends Component {
             <div style={{ overflow: "hidden" }}>
               <div className="col s2">
                 <a
-                  href="/"
+                  target="_blank"
+                  href="https://www.qut.edu.au/research/study-with-us/student-topics/topics/text-analysis-for-engineering-education"
                   className="btn-floating btn-large waves-effect waves-light blue darken-4"
                 >
                   QT
@@ -196,7 +236,7 @@ class Chatbot extends Component {
         >
           <nav onClick={this.hide}>
             <div className="nav-wrapper blue darken-4">
-              <a className="brand-logo" onClick={this.hide}>
+              <a className="brand-logo" onClick={this.hide} href="/">
                 <h5 style={{ marginLeft: "1em" }}>QUT Support Chatbot</h5>
               </a>
               <ul id="nav-mobile" className="right hide-on-med-and-down">
@@ -210,7 +250,13 @@ class Chatbot extends Component {
           </nav>
           <div
             id="chatbot"
-            style={{ height: 388, width: "100%", overflow: "auto" }}
+            style={{
+              height: 388,
+              width: "100%",
+              overflow: "auto",
+              backgroundColor: "#F5F5F5",
+              zIndex: -1,
+            }}
           >
             {this.renderMessages(this.state.messages)}
             <div
@@ -227,6 +273,7 @@ class Chatbot extends Component {
                 paddingLeft: "5%",
                 paddingRight: "5%",
                 width: "90%",
+                backgroundColor: "white",
               }}
               placeholder="Enter message..."
               type="text"
@@ -252,7 +299,7 @@ class Chatbot extends Component {
         >
           <nav onClick={this.show}>
             <div className="nav-wrapper blue darken-4">
-              <a className="brand-logo" onClick={this.show}>
+              <a className="brand-logo" onClick={this.show} href="/">
                 <h5 style={{ marginLeft: "1em" }}>QUT Support Chatbot</h5>
               </a>
               <ul id="nav-mobile" className="right hide-on-med-and-down">

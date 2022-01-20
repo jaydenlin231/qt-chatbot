@@ -1,7 +1,7 @@
 import React from "react";
-
+import "./Landing.css";
 const Landing = () => {
-  return <div>{/* <h3>QUT Support</h3> */}</div>;
+  return <div className="hero-image"></div>;
 };
 
 export default Landing;

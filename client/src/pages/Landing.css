@@ -1,0 +1,13 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+}
+
+.hero-image {
+  background-image: url("./../../../client/public/QUTBb.png");
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+}

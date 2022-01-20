@@ -10,7 +10,11 @@ const Message = (props) => {
         <div className="row valign-wrapper">
           {props.speaks === "bot" && (
             <div className="col s2">
-              <a className="btn-floating btn-large waves-effect waves-light blue darken-4">
+              <a
+                target="_blank"
+                className="btn-floating btn-large waves-effect waves-light blue darken-4"
+                href="https://www.qut.edu.au/research/study-with-us/student-topics/topics/text-analysis-for-engineering-education"
+              >
                 QT
               </a>
             </div>
@@ -20,7 +24,10 @@ const Message = (props) => {
           </div>
           {props.speaks === "me" && (
             <div className="col s2" style={{ marginRight: "1em" }}>
-              <a className="btn-floating btn-large waves-effect waves-light grey">
+              <a
+                className="btn-floating btn-large waves-effect waves-light grey"
+                href="/#"
+              >
                 ME
               </a>
             </div>

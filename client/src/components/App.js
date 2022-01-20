@@ -9,7 +9,7 @@ const App = () => {
     <div>
       <BrowserRouter>
         <div>
-          <Header></Header>
+          {/* <Header></Header> */}
           <Routes>
             <Route exact path="/" element={<Landing />} />
           </Routes>

@@ -2,7 +2,7 @@
 const dialogflow = require("dialogflow");
 const { struct } = require("pb-util");
 // const uuid = require("uuid");
-
+const mongoose = require("mongoose");
 const config = require("../config/keys");
 const projectID = config.googleProjectID;
 const sessionID = config.dialogFlowSessionID;
@@ -15,6 +15,9 @@ const sessionClient = new dialogflow.SessionsClient({
   projectID: projectID,
   credentials: credentials,
 });
+
+const Registration = mongoose.model("registration");
+const Feedback = mongoose.model("feedback");
 
 // const sessionPath = sessionClient.sessionPath(
 //   config.googleProjectID,
@@ -46,9 +49,49 @@ module.exports = {
   },
 
   handleActions: function (responses) {
+    let self = module.exports;
+    let queryResult = responses[0].queryResult;
+
+    switch (queryResult.action) {
+      case "CollectUserInfo.CollectUserInfo-yes":
+        if (queryResult.allRequiredParamsPresent) {
+          self.saveRegistration(
+            queryResult.outputContexts[1].parameters.fields
+          );
+        }
+        break;
+      case "saveFeedback":
+        if (queryResult.allRequiredParamsPresent) {
+          console.log(queryResult.parameters.fields);
+        }
+        self.saveFeedback(queryResult.parameters.fields);
+        break;
+    }
     return responses;
   },
-
+  saveRegistration: async function (fields) {
+    const registration = new Registration({
+      user: fields.user.structValue.fields.name.stringValue,
+      userIdentification: fields["userIdentification.original"].stringValue,
+    });
+    try {
+      let reg = await registration.save();
+      console.log(reg);
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  saveFeedback: async function (fields) {
+    const feedback = new Feedback({
+      feedback: fields.feedback.stringValue,
+    });
+    try {
+      let fdbk = await feedback.save();
+      console.log(fdbk);
+    } catch (err) {
+      console.log(err);
+    }
+  },
   eventQuery: async function (event, userID, parameters = {}) {
     let sessionPath = sessionClient.sessionPath(projectID, sessionID + userID);
     let self = module.exports;
